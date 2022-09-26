@@ -1,0 +1,24 @@
+.buttonText {
+  position: absolute;
+  top: 85%;
+  right: 3px;
+  border: none;
+}
+
+.buttonText button {
+  border: none;
+  background: none;
+  color: rgb(187, 187, 255);
+  font-size: 1rem;
+  padding-right: 0.1rem;
+}
+
+.buttonText button:hover,
+button:active {
+  cursor: pointer;
+  color: rgb(1, 1, 100);
+}
+
+.buttonText .buttonActive {
+  color: rgb(1, 1, 100);
+}
