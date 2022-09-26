@@ -6,10 +6,6 @@ table {
   padding: 2rem;
 }
 
-section {
-  margin: 0.25rem 0 !important;
-}
-
 th {
   background-color: rgb(25, 0, 48);
   color: white;
