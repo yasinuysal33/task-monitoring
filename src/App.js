@@ -14,12 +14,9 @@ import { ref, onValue } from "firebase/database";
 import { database } from "./firebase/firebaseConfig";
 
 function App() {
-  
-
+  console.log(JSON.parse("false"));
   const { isLoggedIn, findAdminEmail, findStaff, uid } =
     useContext(StaffContext);
-
-  
 
   useEffect(() => {
     const mainData = ref(database, "/" + uid);
@@ -27,7 +24,7 @@ function App() {
       const data = snapshot.val();
 
       // updateStarCount(postElement, data);
-  
+
       const units = [];
       const email = [];
       for (const key in data.units) {

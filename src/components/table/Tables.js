@@ -28,7 +28,7 @@ function Tables(props) {
     // console.log(selectedTask);
 
     const updates = {};
-    updates[uid + "/duties/" + item.id + "/status/"] = !item.status;
+    updates[uid + "/duties/" + item.id + "/status/"] = !JSON.parse(item.status);
     updates[uid + "/duties/" + item.id + "/completedDate/"] = (() => {
       const date = new Date();
       const year = date.getFullYear();

@@ -9,9 +9,12 @@ function GiveDuty() {
   const { uid } = useContext(StaffContext);
 
   function getDutyDataHandler(data) {
-    set(ref(database, uid + "/duties/" + btoa(Math.random())), {
-      ...data,
-    })
+    set(
+      ref(database, uid + "/duties/" + data.givenDate + btoa(Math.random())),
+      {
+        ...data,
+      }
+    )
       .then(() => {
         console.log("Task given");
       })
