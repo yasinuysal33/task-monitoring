@@ -5,7 +5,6 @@
 | ![](/Screenshots/Login.jpg) | ![](/Screenshots/Assign%20Task.jpg)|
 |-|-|
 | ![](/Screenshots/Report.jpg) | ![](/Screenshots/Update.jpg)|
-|-|-|
 | ![](/Screenshots/Sort.jpg) | ![](/Screenshots/Settings.jpg)|
 
 
