@@ -14,7 +14,6 @@ import { ref, onValue } from "firebase/database";
 import { database } from "./firebase/firebaseConfig";
 
 function App() {
-  console.log(JSON.parse("false"));
   const { isLoggedIn, findAdminEmail, findStaff, uid } =
     useContext(StaffContext);
 
