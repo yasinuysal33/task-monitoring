@@ -7,7 +7,9 @@ import { getDatabase } from "firebase/database";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 async function fetchFirebaseData() {
-  const response = await axios.put("http://localhost:5000/fetchfirebasedata");
+  const response = await axios.put(
+    `${process.env.PUBLIC_URL}/fetchfirebasedata`
+  );
   return response.data;
 }
 
