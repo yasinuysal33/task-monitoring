@@ -115,7 +115,7 @@ const AuthForm = (props) => {
             id="email"
             required
             ref={emailInputRef}
-            defaultValue="@gmail.com"
+            defaultValue="@adfankastre.com.tr"
           />
         </div>
         <div className={classes.control}>
