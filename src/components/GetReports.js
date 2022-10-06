@@ -19,7 +19,7 @@ function GetReports() {
   const enteredStatus = useRef();
   const formElement = useRef();
 
-  const { staff, uid } = useContext(StaffContext);
+  const { staff, uid, deptName, isManager } = useContext(StaffContext);
 
   const upperGroup = staff.map((el) => (
     <option key={el.id} value={el.department}>
@@ -27,13 +27,23 @@ function GetReports() {
     </option>
   ));
 
-  const listedStaff = staff.map((el) =>
-    el.staff.map((person) => (
-      <option key={person} value={person}>
-        {person}
-      </option>
-    ))
-  );
+  const listedStaff = isManager
+    ? staff.map((el) =>
+        el.staff.map((person) => (
+          <option key={person} value={person}>
+            {person}
+          </option>
+        ))
+      )
+    : staff
+        .filter((el) => el.department === deptName)
+        .map((el) =>
+          el.staff.map((person) => (
+            <option key={person} value={person}>
+              {person}
+            </option>
+          ))
+        );
 
   function submitHandler(e) {
     setIsLoading(true);
@@ -123,8 +133,10 @@ function GetReports() {
                 name="units"
                 ref={enteredUnit}
               >
-                <option value=""></option>
-                {upperGroup}
+                <option value={!isManager ? deptName : ""}>
+                  {!isManager ? deptName : ""}
+                </option>
+                {!isManager ? "" : upperGroup}
               </select>
             </div>
             <div className={classes.control}>

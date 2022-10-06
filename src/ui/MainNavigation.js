@@ -12,12 +12,12 @@ import { Fragment, useContext } from "react";
 import StaffContext from "../components/store/staffContext";
 
 function MainNavigation() {
-  const { isLoggedIn, logout } = useContext(StaffContext);
+  const { isLoggedIn, logout, isManager } = useContext(StaffContext);
 
   return (
     <header className={classes.header}>
       <div className={classes.logo}>
-        <Link className={classes.centered} to="/">
+        <Link className={classes.centered} to={isManager ? "/" : "/tasks"}>
           <RiHome3Line
             style={{
               marginRight: "8px",
@@ -32,15 +32,17 @@ function MainNavigation() {
           {isLoggedIn && (
             <Fragment>
               <li>
-                <Link className={classes.centered} to="/">
-                  <BsPencilSquare
-                    style={{
-                      marginRight: "8px",
-                      fontSize: "150%",
-                    }}
-                  />
-                  Assign Task
-                </Link>
+                {isManager && (
+                  <Link className={classes.centered} to="/">
+                    <BsPencilSquare
+                      style={{
+                        marginRight: "8px",
+                        fontSize: "150%",
+                      }}
+                    />
+                    Assign Task
+                  </Link>
+                )}
               </li>
 
               <li>
@@ -55,14 +57,16 @@ function MainNavigation() {
                 </Link>
               </li>
               <li>
-                <Link className={classes.centered} to="/settings">
-                  <RiSettings5Line
-                    style={{
-                      marginRight: "8px",
-                      fontSize: "150%",
-                    }}
-                  />
-                </Link>
+                {isManager && (
+                  <Link className={classes.centered} to="/settings">
+                    <RiSettings5Line
+                      style={{
+                        marginRight: "8px",
+                        fontSize: "150%",
+                      }}
+                    />
+                  </Link>
+                )}
               </li>
               <li
                 onClick={(e) => {

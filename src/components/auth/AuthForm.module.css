@@ -23,6 +23,12 @@
   justify-content: flex-start;
 }
 
+.check {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+}
+
 .control label {
   color: rgb(100, 100, 100);
   font-weight: bold;

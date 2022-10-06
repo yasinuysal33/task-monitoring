@@ -9,7 +9,7 @@ import { database } from "../../firebase/firebaseConfig";
 import StaffContext from "../store/staffContext";
 
 function Tables(props) {
-  const { uid } = useContext(StaffContext);
+  const { uid, isManager } = useContext(StaffContext);
   // const { URL } = useContext(StaffContext);
 
   const [modifiedTable, setModifiedTable] = useState(props.tabledContent);
@@ -21,7 +21,7 @@ function Tables(props) {
     setModifiedTable([...props.tabledContent]);
   }, [props.tabledContent]);
 
-  console.log(modifiedTable);
+  // console.log(modifiedTable);
 
   const completeHandler = (item) => {
     // const selectedTask = push(child(ref(database), "duties/" + item.id)).key;
@@ -110,12 +110,14 @@ function Tables(props) {
         {e.completedDate}
       </td>
       <td key={e.id + e.responsible} id={e.id}>
-        <button onClick={() => updateDuty(e)}>Update</button>
+        {isManager && <button onClick={() => updateDuty(e)}>Update</button>}
       </td>
       <td key={e.id} id={e.id}>
-        <button onClick={() => completeHandler(e)}>
-          {e.status === true ? "Open" : "Close"}
-        </button>
+        {isManager && (
+          <button onClick={() => completeHandler(e)}>
+            {e.status === true ? "Open" : "Close"}
+          </button>
+        )}
       </td>
     </tr>
   ));
@@ -137,7 +139,7 @@ function Tables(props) {
                   <FaSort style={{ paddingTop: "5px" }} />
                 </section>
               </th>
-              <th onClick={() => sortHelper("unit")}>
+              <th className="sortedHeader" onClick={() => sortHelper("unit")}>
                 <section>
                   UNIT
                   <FaSort style={{ paddingTop: "5px" }} />

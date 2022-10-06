@@ -10,20 +10,26 @@ import {
 
 import classes from "./AuthForm.module.css";
 
-const AuthForm = () => {
+const AuthForm = (props) => {
   const auth = getAuth();
 
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  const checkRef = useRef();
   const navigate = useNavigate();
 
   const { login } = useContext(StaffContext);
 
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [checked, setChecked] = useState(true);
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
+  };
+
+  const checkHandler = () => {
+    setChecked((prev) => !prev);
   };
 
   const submitHandler = (e) => {
@@ -40,12 +46,15 @@ const AuthForm = () => {
       .then((response) => {
         setIsLoading(false);
 
-        console.log(response.user.stsTokenManager.expirationTime);
+        console.log(response.user.email);
+        props.findDeptName(response.user.email);
         login(
           response.user.accessToken,
-          response.user.uid,
-          response.user.stsTokenManager.expirationTime
+          checked ? response.user.uid : "Ee5si3B4eaPoMvh32eRiJg2OyIp2",
+          response.user.stsTokenManager.expirationTime,
+          checked
         );
+
         navigate("/");
       })
       .catch((err) => {
@@ -106,7 +115,7 @@ const AuthForm = () => {
             id="email"
             required
             ref={emailInputRef}
-            defaultValue="@adfankastre.com.tr"
+            defaultValue="@gmail.com"
           />
         </div>
         <div className={classes.control}>
@@ -117,6 +126,19 @@ const AuthForm = () => {
             required
             ref={passwordInputRef}
           />
+        </div>
+        <div className={classes.check}>
+          <label htmlFor="admin">
+            <input
+              type="checkbox"
+              id="admin"
+              name="admin"
+              checked={checked}
+              onChange={checkHandler}
+              ref={checkRef}
+            />
+            Login as Manager
+          </label>
         </div>
         <div className={classes.actions}>
           {!isLoading && (
