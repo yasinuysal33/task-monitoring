@@ -11,14 +11,20 @@ function UpdatedDutyForm(props) {
   const enteredDeadline = useRef();
   const dutyUpdatedDate = useRef();
   const dutyStatus = useRef();
+  const checkRef = useRef();
 
   const staffCtx = useContext(StaffContext);
 
   const [text, setText] = useState("");
   const [resetText, setResetText] = useState(false);
+  const [checked, setChecked] = useState(true);
 
   const transcriptText = (textTemp) => {
-    setText(props.updatingItem.description + " " + textTemp);
+    setText(
+      staffCtx.isManager
+        ? props.updatingItem.description
+        : props.updatingItem?.updates + " " + textTemp
+    );
   };
 
   const staff = staffCtx.staff.map((el) => (
@@ -38,12 +44,51 @@ function UpdatedDutyForm(props) {
 
   let selectedIndex;
 
+  const checkHandler = () => {
+    setChecked((prev) => !prev);
+  };
+
   function deleteHandler(e) {
     e.preventDefault();
 
     props.deleteDuty();
 
     // e.target.reset();
+  }
+
+  function closeRequest(e) {
+    e.preventDefault();
+
+    selectedIndex = enteredUnit.current.selectedIndex;
+    const selectedResponsible = enteredUnit.current[selectedIndex].value;
+    const selectedOptgroup =
+      enteredUnit.current[selectedIndex].parentElement.label;
+    const emailName = staffCtx.adminEmail[0].emails;
+
+    const dutyData = {
+      title: "Close Request",
+      id: props.updatingItem.id,
+      responsible: selectedResponsible,
+      unit: selectedOptgroup,
+      duty: enteredDuty.current.value,
+      description: staffCtx.isManager
+        ? enteredDescription.current.value
+        : props.updatingItem.description,
+      updates: !staffCtx.isManager
+        ? enteredDescription.current.value
+        : props.updatingItem?.updates,
+      deadline: enteredDeadline.current.value,
+      givenDate: props.updatingItem.givenDate,
+      updatedDate: dutyUpdatedDate.current.value,
+      status: dutyStatus.current.value,
+      email: emailName,
+    };
+
+    checked && emailSend(dutyData);
+
+    props.closeModal();
+
+    e.target.reset();
   }
 
   function submitHandler(e) {
@@ -58,11 +103,17 @@ function UpdatedDutyForm(props) {
     console.log(emailName);
 
     const dutyData = {
+      title: "Task Update",
       id: props.updatingItem.id,
       responsible: selectedResponsible,
       unit: selectedOptgroup,
       duty: enteredDuty.current.value,
-      description: enteredDescription.current.value,
+      description: staffCtx.isManager
+        ? enteredDescription.current.value
+        : props.updatingItem.description,
+      updates: !staffCtx.isManager
+        ? enteredDescription.current.value
+        : props.updatingItem?.updates,
       deadline: enteredDeadline.current.value,
       givenDate: props.updatingItem.givenDate,
       updatedDate: dutyUpdatedDate.current.value,
@@ -70,7 +121,7 @@ function UpdatedDutyForm(props) {
       email: emailName,
     };
 
-    emailSend(dutyData);
+    checked && emailSend(dutyData);
 
     props.getDutyData(dutyData);
 
@@ -121,7 +172,7 @@ function UpdatedDutyForm(props) {
               id="description"
               rows="5"
               ref={enteredDescription}
-            ></textarea>{" "}
+            ></textarea>
             <Microphone
               transcriptText={transcriptText}
               container={classes.container}
@@ -161,8 +212,23 @@ function UpdatedDutyForm(props) {
             />
           </div>
           <div className={classes.actions}>
-            <button onClick={deleteHandler}>Delete Task</button>
+            <button onClick={staffCtx.isManager ? deleteHandler : closeRequest}>
+              {staffCtx.isManager ? "Delete Task" : "Send Close Req"}
+            </button>
             <button>Update Task</button>
+          </div>
+          <div className={classes.check}>
+            <label htmlFor="semdEmail">
+              <input
+                type="checkbox"
+                id="sendEmail"
+                name="sendEmail"
+                checked={checked}
+                onChange={checkHandler}
+                ref={checkRef}
+              />
+              Send Email
+            </label>
           </div>
         </fieldset>
       </form>

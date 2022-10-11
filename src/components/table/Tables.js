@@ -100,17 +100,21 @@ function Tables(props) {
 
   const lastTable = modifiedTable.map((e, i) => (
     <tr key={e.id}>
+      <td key={e.responsible + "number"}>{i + 1}</td>
       <td key={e.responsible + "1"}>{e.responsible}</td>
       <td key={e.unit}>{e.unit}</td>
       <td key={e.duty}>{e.duty}</td>
       <td key={e.description}>{e.description}</td>
+      <td className="description" key={e?.updates}>
+        {e?.updates}
+      </td>
       <td key={e.deadline}>{e.deadline}</td>
       <td key={e.givenDate}>{e.givenDate}</td>
       <td key={e.completedDate + e.id} id={e.id}>
         {e.completedDate}
       </td>
       <td key={e.id + e.responsible} id={e.id}>
-        {isManager && <button onClick={() => updateDuty(e)}>Update</button>}
+        <button onClick={() => updateDuty(e)}>Update</button>
       </td>
       <td key={e.id} id={e.id}>
         {isManager && (
@@ -131,8 +135,13 @@ function Tables(props) {
             <tr>
               <th
                 className="sortedHeader"
-                onClick={() => sortHelper("responsible")}
                 style={{ borderRadius: "5px 0 0 0" }}
+              >
+                <section>#</section>
+              </th>
+              <th
+                className="sortedHeader"
+                onClick={() => sortHelper("responsible")}
               >
                 <section>
                   RESPONSIBLE
@@ -146,7 +155,8 @@ function Tables(props) {
                 </section>
               </th>
               <th>TASK</th>
-              <th style={{ width: "50%" }}>DESCRIPTION</th>
+              <th style={{ width: "30%" }}>DESCRIPTION</th>
+              <th style={{ width: "30%" }}>UPDATES</th>
               <th
                 className="sortedHeader"
                 onClick={() => sortHelper("deadline")}

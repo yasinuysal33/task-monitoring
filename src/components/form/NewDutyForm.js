@@ -49,10 +49,12 @@ function NewDutyForm(props) {
       enteredUnit.current[selectedIndex].parentElement.dataset.email;
 
     const dutyData = {
+      title: "New Task",
       responsible: selectedResponsible,
       unit: selectedOptgroup,
       duty: enteredDuty.current.value,
       description: enteredDescription.current.value,
+      updates: "",
       deadline: enteredDeadline.current.value,
       givenDate: dutyGivenDate.current.value,
       status: dutyStatus.current.value,
