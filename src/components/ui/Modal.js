@@ -12,6 +12,10 @@ const Modal = ({ setIsOpen, updatingItem }) => {
   const { uid } = useContext(StaffContext);
   // const { URL } = useContext(StaffContext);
 
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   function getDutyDataHandler(data) {
     set(ref(database, uid + "/duties/" + updatingItem.id), {
       ...data,
@@ -20,7 +24,7 @@ const Modal = ({ setIsOpen, updatingItem }) => {
         console.log("Data updated");
       })
       .catch((err) => alert(err.code, err.message));
-    window.location.reload();
+    // window.location.reload();
     setIsOpen(false);
     /*  fetch(`${URL}duties/${updatingItem.id}.json`, {
       method: "PATCH", // or 'PUT'
@@ -48,7 +52,7 @@ const Modal = ({ setIsOpen, updatingItem }) => {
         console.log("Data deleted");
       })
       .catch((err) => alert(err.code, err.message));
-    window.location.reload();
+    // window.location.reload();
     setIsOpen(false);
     /*
     fetch(`${URL}duties/${updatingItem.id}.json`, {
@@ -81,6 +85,7 @@ const Modal = ({ setIsOpen, updatingItem }) => {
           getDutyData={getDutyDataHandler}
           deleteDuty={deleteHandler}
           updatingItem={updatingItem}
+          closeModal={closeModal}
         />
       </div>
     </Fragment>

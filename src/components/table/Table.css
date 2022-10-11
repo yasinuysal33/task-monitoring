@@ -5,6 +5,9 @@ table {
   width: 100%;
   padding: 2rem;
 }
+.description {
+  color: red;
+}
 
 th {
   background-color: rgb(25, 0, 48);

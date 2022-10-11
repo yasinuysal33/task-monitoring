@@ -6,6 +6,12 @@
   margin-bottom: 0.5rem;
 }
 
+.check {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+}
+
 .control label {
   display: block;
   font-weight: bold;
